@@ -1,10 +1,9 @@
 import mongoose from 'mongoose';
-import mangoose from 'mongoose';
 
 const doctorSchema = new mongoose.Schema({
     name:{type:String,require:true},
     email:{type:String,require:true,unique:true},
-    passwors:{type:String,require:true},
+    password:{type:String,require:true},
     image:{type:String,require:true},
     speciality:{type:String,require:true},
     degree:{type:String,require:true},
@@ -16,3 +15,7 @@ const doctorSchema = new mongoose.Schema({
     date:{type:Number,require:true},
     slots_booked:{type:Object,default:{}},
 },{minimize:false})
+
+const doctorModel = mongoose.model.doctor || mongoose.model('doctor',doctorSchema)
+
+export default doctorModel
