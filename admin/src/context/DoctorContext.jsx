@@ -2,17 +2,17 @@ import { createContext } from "react";
 
 export const DoctorContext = createContext()
 
-const DoctorContectProvider = (props) =>{
+const DoctorContextProvider = (props) =>{
    
     const value = {
 
     }
 
     return (
-        <DoctorContect.Provider value={value}>
+        <DoctorContext.Provider value={value}>
             {props.children}
-        </DoctorContect.Provider>
+        </DoctorContext.Provider>
     )
 }
 
-export default DoctorContectProvider
+export default DoctorContextProvider
