@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {assets} from '../assets/assets'
 import { useState } from 'react'
 import { AdminContext } from '../context/AdminContext'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const Login = () => {
 
@@ -9,13 +11,24 @@ const Login = () => {
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
 
-    const {setAtoken,backendUrl} = useState(AdminContext)
+    const {setAtoken,backendUrl} = useContext(AdminContext)
 
     const onSubmitHandler = async (event)=>{
        event.preventDefault()
 
        try{
+          if(state === 'Admin'){
+             
+             const {data} = await axios.post(backendUrl + '/api/admin/login', {email,password})
+             if(data.success){
+                localStorage.setAtoken('aToken',data.token)
+                setAtoken(data.token)
+             } else{
+                toast.error(data.message)
+             }
+          } else{
 
+          }
        }
        catch{
         
@@ -32,11 +45,11 @@ const Login = () => {
             <p className='text-2xl font-semibold m-auto'><span className='text-blue-500'>{state}</span> Login</p>
             <div className='w-full'>
                 <p>Email</p>
-                <input onClick={(e)=>setEmail(e.target.value)} value={email} className='border border-[#DADADA] rounded w-full p-2 mt-1' type="email" required />
+                <input onChange={(e)=>setEmail(e.target.value)} value={email} className='border border-[#DADADA] rounded w-full p-2 mt-1' type="email" required />
             </div>
             <div className='w-full'>
                 <p>Password</p>
-                <input onClick={(e)=>setPassword(e.target.password)} value={password} className='border border-[#DADADA] rounded w-full p-2 mt-1' type="password" required />
+                <input onChange={(e)=>setPassword(e.target.password)} value={password} className='border border-[#DADADA] rounded w-full p-2 mt-1' type="password" required />
             </div>
             <button className='bg-blue-500 text-white w-full py-2 rounded-md text-base'>Login</button>
             {

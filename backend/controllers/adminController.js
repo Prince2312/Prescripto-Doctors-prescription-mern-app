@@ -13,19 +13,20 @@ const addDoctor = async (req, res) => {
       const { name, email, password, speciality, degree, experience, about, fees, address } = req.body
       const imageFile = req.file
       // Checking for all data to add doctor
+      console.log({name, email, password, speciality, degree, experience, about, fees, address})
 
       if (!name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address) {
-         return res.json({ success: false, message: "Missing Details" })
+         return res.json({ success:false, message:"Missing Details" })
       }
 
       // validating email fromat
       if (!validator.isEmail(email)) {
-         return res.json({ success: false, message: "Please enter a valid email" })
+         return res.json({ success:false, message:"Please enter a valid email" })
       }
 
       //  validating strong password
       if (password.length < 8) {
-         return res.json({ success: false, message: "Please enter strong password" })
+         return res.json({ success: false, message: "Please enter a strong password" })
       }
 
       // hashing doctor password
@@ -53,11 +54,11 @@ const addDoctor = async (req, res) => {
       const newDoctor = new doctorModel(doctorData)
       await newDoctor.save()
 
-      res.json({ success: true, message: "Doctor Added" })
+      res.json({ success:true, message:"Doctor Added" })
 
    } catch (error) {
       console.log(error)
-      res.json({ success: false, message: error.message })
+      res.json({ success:false, message:error.message })
    }
 }
 
@@ -72,7 +73,7 @@ const loginAdmin = async (req, res) => {
          res.json({success:true,token})
 
       } else {
-         res.json({ success: false, message:"Invalid credentials" })
+         res.json({ success:false, message:"Invalid credentials" })
       }
    } catch (error) {
       console.log(error)
